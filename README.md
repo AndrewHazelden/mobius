@@ -29,6 +29,14 @@ The following resources are required to use the Python based source code in this
     pip3 install numpy
     pip3 install scipy
 
+## Screenshots
+
+Mobius Spherical Zooming:
+![Docs](Docs/Images/scaled_test_image.png)
+
+Mobius Spherical Rotations:
+![Docs](Docs/Images/rotated_test_image.png)
+
 ## Python CLI Usage Instructions
 
     python3 mobius.py --input "source.0000.png" --output "output.0000.png" --x 180 --y 270 --zoom 10
