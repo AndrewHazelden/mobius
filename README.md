@@ -39,11 +39,13 @@ Mobius Spherical Rotations:
 
 ## Python CLI Usage Instructions
 
-    python3 mobius.py --input "source.0000.png" --output "output.0000.png" --x 180 --y 270 --zoom 10
+    python3 mobius.py --input "source.0000.png" --output "output.0000.png" --x 180 --y 135 --zoom 10
+
+    python3 mobius.py --input "source.0000.png" --output "output.0000.png" --x 0.5 --y 0.75 --zoom 10 --normalized
 
 ## Python Script Syntax
 
-    usage: mobius.py [-h] -i INPUT -o OUTPUT -x X -y Y -z ZOOM
+    usage: mobius.py [-h] -i INPUT -o OUTPUT -x X -y Y -z ZOOM [-n]
 
     Apply Mobius transformations to spherical 360x180 degree footage.
 
@@ -56,5 +58,7 @@ Mobius Spherical Rotations:
       -x X, --x X           Center X (in degrees)
       -y Y, --y Y           Center Y (in degrees)
       -z ZOOM, --zoom ZOOM  Zoom level
+      -n, --normalized      Use normalized (0-1) range screen space coordinates for the CenterX/Y input values
+                            instead of degrees.
 
-Last Edited: (2022-09-01)
+Last Edited: (2022-09-02)

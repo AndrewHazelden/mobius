@@ -4,7 +4,9 @@
 # https://github.com/henryseg/spherical_image_editing
 
 # CLI Usage:
-# python3 mobius.py --input "source.0000.png" --output "output.0000.png" --x 180 --y 270 --zoom 10
+# python3 mobius.py --input "source.0000.png" --output "output.0000.png" --x 180 --y 135 --zoom 10
+
+# python3 mobius.py --input "source.0000.png" --output "output.0000.png" --x 0.5 --y 0.75 --zoom 10 --normalized
 
 import os, sys, argparse
 import numpy as np
@@ -303,12 +305,13 @@ def apply_SL2C_elt_to_image(M_SL2C, src_image, out_size=None):
 
 def main():
     parser = argparse.ArgumentParser(description="Apply Mobius transformations to spherical 360x180 degree footage.")
-    parser.add_argument("-i", "--input", required=True, type=str, help="The filepath to your source image")
-    parser.add_argument("-o", "--output", required=True, type=str, help="The filepath to your output image")
+    parser.add_argument("-i", "--input", type=str, required=True, help="The filepath to your source image")
+    parser.add_argument("-o", "--output", type=str, required=True, help="The filepath to your output image")
     parser.add_argument("-x", "--x", type=float, required=True, help="Center X (in degrees)")
     parser.add_argument("-y", "--y", type=float, required=True, help="Center Y (in degrees)")
     parser.add_argument("-z", "--zoom", type=float, required=True, help="Zoom level")
-
+    parser.add_argument("-n", "--normalized", help="Use normalized (0-1) range screen space coordinates for the CenterX/Y input values instead of degrees.",
+                    action="store_true")
     try:
         args = parser.parse_args()
     except:
@@ -317,12 +320,19 @@ def main():
 
     in_path = args.input
     out_path = args.output
-    x_degree = args.x
-    y_degree = args.y
+
     zoom = args.zoom
 
+    x_degree = args.x
+    y_degree = args.y
+
+    # Process 0-1 range normalized values into 360x180 degree output
+    if args.normalized:
+        x_degree *= 360
+        y_degree *= 180
+
     print("\n[Möbius Transforms]")
-    print("\t[Parameters] [x]", x_degree, "[Y]", y_degree, "[Zoom]", zoom)
+    print("\t[Parameters] [X]", x_degree, "[Y]", y_degree, "[Zoom]", zoom, "X")
     print("\t[Input Image] ", in_path)
     print("\t[Output Image] ", out_path)
     print("\n")
@@ -336,7 +346,6 @@ def main():
 
     np.clip(out_image, 0, 255, out_image)
     Image.fromarray(out_image.astype(np.uint8)).save(out_path)
-
 
 if __name__ == '__main__':
     main()
